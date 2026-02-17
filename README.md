@@ -1,2 +1,2 @@
 This is my portfolio. 
-Please go thriugh the files for my work sample.
+Please go through the files for my work sample.
