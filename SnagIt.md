@@ -45,10 +45,11 @@ To create clear, consistent visual documentation in software projects. To annota
 ###### Licensing cost - Its a paid tool, not for small groups.
 
 ### Snipping Tool Vs SnagIT
-|Snipping Tool|SnagIt|
-|-------------|------|
-|Screen capture|Screen Capture|
-|Video|Not Applicable|
-|Scroll Capture|Not Applicable|
+|Features      |Snipping Tool|SnagIt|
+|--------------|-------------|------|
+|Screen capture|Yes          |Yes   |
+|Video         |Yes          |Yes   |
+|Scroll Capture|No           |Yes   |
+|Annotation    |No           |Yes   |
 
 To learn more about <https://app.screencast.com/XEWoHTSN8jOBz>
