@@ -3,6 +3,8 @@
 
 This guide explains the steps to withdraw cash from an ATM.
 
+![Flowchart of cash withdrawal from an ATM](Withdraw cash from ATM flowchart.png)
+
 ## Prerequisites
 
 Before you begin, make sure that you have:
