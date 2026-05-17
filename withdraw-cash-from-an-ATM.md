@@ -3,8 +3,7 @@
 
 This guide explains the steps to withdraw cash from an ATM.
 
-[Flowchart](Withdraw cash from ATM flowchart.jpg)
-
+<img width="1056" height="2946" alt="Withdraw cash from ATM flowchart" src="https://github.com/user-attachments/assets/b9f9b6b3-3de8-4d55-95bb-8299a20cc9c0" />
 
 
 ## Prerequisites
