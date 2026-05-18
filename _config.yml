@@ -1,3 +1,11 @@
-theme: jekyll-theme-minimal
-title: Vidhya Dharmadurai
-description: Technical Writer Portfolio
+title: Technical Writing Portfolio
+description: My technical documentation portfolio
+theme: just-the-docs
+
+url: https://Vidhya.github.io
+baseurl: "/technical-writing-portfolio"
+
+search_enabled: true
+
+aux_links:
+  GitHub Repository: https://github.com/Vidhya/technical-writing-portfolio
