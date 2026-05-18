@@ -1,3 +1,10 @@
+---
+title: SangIt
+parent: README
+nav_order: 2
+---
+
+
 # SangIt
 ## Why to Use Snagit When Free Tools Exist?
 
