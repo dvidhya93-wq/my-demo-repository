@@ -1,3 +1,10 @@
+---
+title: Cardamom and ginger tea
+parent: README
+nav_order: 1
+---
+
+
 # Cardamom and ginger tea
 This guide helps you to prepare cardamom and ginger tea.
 
