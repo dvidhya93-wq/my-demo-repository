@@ -1,10 +1,3 @@
----
-title: Cardamom and ginger tea
-parent: README
-nav_order: 1
----
-
-
 # Cardamom and ginger tea
 This guide helps you to prepare cardamom and ginger tea.
 
@@ -29,7 +22,7 @@ Before you start, make sure that you have:
 
 ## Steps:
    1. Pour two cups of fresh water into a tea pan.
-   2. Place the tea pan on the stove or induction stove.
+   2. Place the tea pan on the gas stove or induction stove.
 > [!CAUTION]
 > Make sure the tea pan is placed properly at the center of the stove to prevent spilling.
    4. Turn on the stove.
