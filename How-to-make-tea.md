@@ -79,4 +79,7 @@ Before you start, make sure that you have:
 
 ![Cardamom/Ginger tea](https://4.bp.blogspot.com/-d6BA6OD4dLQ/VqgBN_gWBzI/AAAAAAAAcAY/avk_QE0qRk8/s1600/gc%2Btea1.jpg)
 
+
+> [!NOTE]
+> XXXX 
 ---
