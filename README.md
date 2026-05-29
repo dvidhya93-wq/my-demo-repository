@@ -14,4 +14,4 @@ I have made some changes.
 
 
 
-[Openweathermap](api/swagger-ui.html)
+[View API docs](api/index.html)
