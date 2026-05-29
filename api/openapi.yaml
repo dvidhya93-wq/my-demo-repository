@@ -1,362 +1,797 @@
-openapi: 3.1.0
-x-stoplight:
-  id: hc4ko9vsgnuwn
+openapi: 3.1.1
 info:
   title: OpenWeatherMap API
-  version: '2.5'
-  summary: Get the current weather
-  description: 'Get the current weather, daily forecast for 16 days, and a three-hour-interval forecast for 5 days for your city. Helpful stats, graphics, and this day in history charts are available for your reference. Interactive maps show precipitation, clouds, pressure, wind around your location stations. Data is available in JSON, XML, or HTML format. **Note**: This sample Swagger file covers the `current` endpoint only from the OpenWeatherMap API. <br/><br/> **Note**: All parameters are optional, but you must select at least one parameter. Calling the API by city ID (using the `id` parameter) will provide the most precise location results.'
+  description: "Get the current weather, daily forecast for 16 days, and a three-hour-interval forecast for 5 days for your city. Helpful stats, graphics, and this day in history charts are available for your reference. Interactive maps show precipitation, clouds, pressure, wind around your location stations. Data is available in JSON, XML, or HTML format. **Note**: This sample Swagger file covers the `current` endpoint only from the OpenWeatherMap API. <br/><br/> **Note**: All parameters are optional, but you must select at least one parameter. Calling the API by city ID (using the `id` parameter) will provide the most precise location results."
+  version: "2.5"
+  termsOfService: https://openweathermap.org/terms
   contact:
-    name: Support
-    url: 'https://openweathermap.org/api'
+    name: OpenWeatherMap API
+    url: https://openweathermap.org/api
     email: some_email@gmail.com
-  termsOfService: 'https://openweathermap.org/terms'
   license:
-    name: Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
-    url: 'https://creativecommons.org/licenses/by-sa/4.0/'
+    name: CC Attribution-ShareAlike 4.0 (CC BY-SA 4.0)
+    url: https://openweathermap.org/price
 servers:
-  - url: 'https://api.openweathermap.org/data/2.5'
+- url: https://api.openweathermap.org/data/2.5
 paths:
   /weather:
     get:
-      summary: weather
       tags:
-        - Weather endpoints
+      - Current Weather Data
+      summary: Call current weather data for one location
+      description: "Access current weather data for any location on Earth including over 200,000 cities! Current weather is frequently updated based on global models and data from more than 40,000 weather stations."
+      operationId: CurrentWeatherData
+      parameters:
+      - name: q
+        in: query
+        description: "**City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes."
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: "**City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have 3 city IDs, it’s treated as 3 API calls.*"
+        schema:
+          type: string
+      - name: lat
+        in: query
+        description: "**Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`."
+        schema:
+          type: string
+      - name: lon
+        in: query
+        description: "**Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`."
+        schema:
+          type: string
+      - name: zip
+        in: query
+        description: "**Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default."
+        schema:
+          type: string
+      - name: units
+        in: query
+        description: "**Units**. *Example: imperial*. Possible values: `standard`, `metric`, and `imperial`. When you do not use the `units` parameter, the format is `standard` by default."
+        schema:
+          type: string
+          enum:
+          - standard
+          - metric
+          - imperial
+          default: imperial
+      - name: lang
+        in: query
+        description: "**Language**. *Example: en*. You can use lang parameter to get the output in your language. We support the following languages that you can use with the corresponded lang values: Arabic - `ar`, Bulgarian - `bg`, Catalan - `ca`, Czech - `cz`, German - `de`, Greek - `el`, English - `en`, Persian (Farsi) - `fa`, Finnish - `fi`, French - `fr`, Galician - `gl`, Croatian - `hr`, Hungarian - `hu`, Italian - `it`, Japanese - `ja`, Korean - `kr`, Latvian - `la`, Lithuanian - `lt`, Macedonian - `mk`, Dutch - `nl`, Polish - `pl`, Portuguese - `pt`, Romanian - `ro`, Russian - `ru`, Swedish - `se`, Slovak - `sk`, Slovenian - `sl`, Spanish - `es`, Turkish - `tr`, Ukrainian - `ua`, Vietnamese - `vi`, Chinese Simplified - `zh_cn`, Chinese Traditional - `zh_tw`."
+        schema:
+          type: string
+          enum:
+          - ar
+          - bg
+          - ca
+          - cz
+          - de
+          - el
+          - en
+          - fa
+          - fi
+          - fr
+          - gl
+          - hr
+          - hu
+          - it
+          - ja
+          - kr
+          - la
+          - lt
+          - mk
+          - nl
+          - pl
+          - pt
+          - ro
+          - ru
+          - se
+          - sk
+          - sl
+          - es
+          - tr
+          - ua
+          - vi
+          - zh_cn
+          - zh_tw
+          default: en
+      - name: mode
+        in: query
+        description: "**Mode**. *Example: html*. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default."
+        schema:
+          type: string
+          enum:
+          - json
+          - xml
+          - html
+          default: json
       responses:
-        '200':
-          description: OK
+        "200":
+          description: Successful response
           content:
             application/json:
               schema:
+                title: Successful response
                 type: object
-                x-examples:
-                  Example 1:
-                    coord:
-                      lon: 77.6033
-                      lat: 12.9762
-                    weather:
-                      - id: 804
-                        main: Clouds
-                        description: overcast clouds
-                        icon: 04n
-                    base: stations
-                    main:
-                      temp: 302.65
-                      feels_like: 304.38
-                      temp_min: 301.05
-                      temp_max: 303.9
-                      pressure: 1011
-                      humidity: 56
-                      sea_level: 1011
-                      grnd_level: 913
-                    visibility: 10000
-                    wind:
-                      speed: 3.11
-                      deg: 208
-                      gust: 5.56
-                    clouds:
-                      all: 99
-                    dt: 1779977881
-                    sys:
-                      type: 2
-                      id: 2017753
-                      country: IN
-                      sunrise: 1779927754
-                      sunset: 1779973884
-                    timezone: 19800
-                    id: 1277333
-                    name: Bengaluru
-                    cod: 200
                 properties:
                   coord:
+                    title: Coord
                     type: object
                     properties:
                       lon:
                         type: number
-                        example: 145.77
-                        description: 'City geo location, longitude'
+                        description: "City geo location, longitude"
+                        examples:
+                        - 145.77
                       lat:
                         type: number
-                        example: -16.92
-                        description: 'City geo location, latitude'
+                        description: "City geo location, latitude"
+                        examples:
+                        - -16.92
                   weather:
                     type: array
                     items:
+                      title: Weather
                       type: object
                       properties:
                         id:
                           type: integer
-                          example: 803
                           description: Weather condition id
+                          format: int32
+                          examples:
+                          - 803
                         main:
                           type: string
-                          example: clouds
-                          description: 'Group of weather parameters (Rain, Snow, Extreme etc.)'
+                          description: "Group of weather parameters (Rain, Snow, Extreme etc.)"
+                          examples:
+                          - Clouds
                         description:
                           type: string
-                          example: broken clouds
                           description: Weather condition within the group
+                          examples:
+                          - broken clouds
                         icon:
                           type: string
-                          example: 04n
                           description: Weather icon id
+                          examples:
+                          - 04n
+                    description: (more info Weather condition codes)
                   base:
                     type: string
-                    example: cmc stations
                     description: Internal parameter
+                    examples:
+                    - cmc stations
                   main:
+                    title: Main
                     type: object
                     properties:
                       temp:
                         type: number
-                        example: 293.25
-                        description: '‘Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.’'
-                      feels_like:
-                        type: number
-                        example: 41.16
-                        description: What the weather feels like despite the actual numbers
-                      temp_min:
-                        type: number
-                        example: 289.82
-                        description: '‘Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.’'
-                      temp_max:
-                        type: number
-                        example: 295.37
-                        description: '‘Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.’'
+                        description: "Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+                        examples:
+                        - 293.25
                       pressure:
                         type: integer
-                        example: 1019
-                        description: '‘Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa’'
+                        description: "Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa"
+                        format: int32
+                        examples:
+                        - 1019
                       humidity:
                         type: integer
-                        example: 83
-                        description: '‘Humidity, %’'
+                        description: "Humidity, %"
+                        format: int32
+                        examples:
+                        - 83
+                      temp_min:
+                        type: number
+                        description: "Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+                        examples:
+                        - 289.82
+                      temp_max:
+                        type: number
+                        description: "Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+                        examples:
+                        - 295.37
                       sea_level:
-                        type: integer
+                        type: number
+                        description: "Atmospheric pressure on the sea level, hPa"
+                        examples:
+                        - 984
                       grnd_level:
-                        type: integer
+                        type: number
+                        description: "Atmospheric pressure on the ground level, hPa"
+                        examples:
+                        - 990
                   visibility:
                     type: integer
-                    example: 16093
-                    description: '‘Visibility, meter’'
+                    description: "Visibility, meter"
+                    examples:
+                    - 16093
                   wind:
+                    title: Wind
                     type: object
                     properties:
                       speed:
                         type: number
-                        example: 5.1
-                        description: '‘Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.’'
+                        description: "Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour."
+                        examples:
+                        - 5.1
                       deg:
                         type: integer
-                        example: 150
-                        description: ‘’
-                      gust:
-                        type: number
+                        description: "Wind direction, degrees (meteorological)"
+                        format: int32
+                        examples:
+                        - 150
                   clouds:
+                    title: Clouds
                     type: object
                     properties:
                       all:
                         type: integer
-                        example: 75
-                        description: '‘Cloudiness, %’'
+                        description: "Cloudiness, %"
+                        format: int32
+                        examples:
+                        - 75
+                  rain:
+                    title: Rain
+                    type: object
+                    properties:
+                      "3h":
+                        type: integer
+                        description: Rain volume for the last 3 hours
+                        format: int32
+                        examples:
+                        - 3
+                  snow:
+                    title: Snow
+                    type: object
+                    properties:
+                      "3h":
+                        type: number
+                        description: Snow volume for the last 3 hours
+                        examples:
+                        - 6
                   dt:
                     type: integer
-                    example: 1435658272
-                    description: ' ‘Time of data calculation, unix, UTC’'
+                    description: "Time of data calculation, unix, UTC"
+                    format: int32
+                    examples:
+                    - 1435658272
                   sys:
+                    title: Sys
                     type: object
                     properties:
                       type:
                         type: integer
-                        example: 1
                         description: Internal parameter
+                        format: int32
+                        examples:
+                        - 1
                       id:
                         type: integer
                         description: Internal parameter
-                        example: 8166
+                        format: int32
+                        examples:
+                        - 8166
+                      message:
+                        type: number
+                        description: Internal parameter
+                        examples:
+                        - 0.0166
                       country:
                         type: string
-                        example: AU
-                        description: '‘Country code (GB, JP etc.)’'
+                        description: "Country code (GB, JP etc.)"
+                        examples:
+                        - AU
                       sunrise:
                         type: integer
-                        example: 1435610796
-                        description: '‘Sunrise time, unix, UTC’'
+                        description: "Sunrise time, unix, UTC"
+                        format: int32
+                        examples:
+                        - 1435610796
                       sunset:
                         type: integer
-                        example: 1435650870
-                        description: '‘Sunset time, unix, UTC’'
-                  timezone:
-                    type: integer
-                    example: -28800
-                    description: the timezone for the station
+                        description: "Sunset time, unix, UTC"
+                        format: int32
+                        examples:
+                        - 1435650870
                   id:
                     type: integer
-                    example: 2172797
                     description: City ID
+                    format: int32
+                    examples:
+                    - 2172797
                   name:
                     type: string
-                    example: Cairns
-                    description: Name
+                    examples:
+                    - Cairns
                   cod:
                     type: integer
-                    example: 200
                     description: Internal parameter
-      operationId: get-weather
-      x-stoplight:
-        id: 9wgiz94qtiih5
-      description: 'Access current weather data for any location on Earth including over 200,000 cities! Current weather is frequently updated based on global models and data from more than 40,000 weather stations.'
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: zip
-          description: '**Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default.'
-        - schema:
-            type: string
-            enum:
-              - standard
-              - metric
-              - imperial
-          in: query
-          name: units
-          description: '**Units**. *Example: imperial*. Possible values: `standard`, `metric`, and `imperial`. When you do not use the `units` parameter, the format is `standard` by default.'
-        - schema:
-            type: string
-          in: query
-          name: q
-          description: '**City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes.'
-        - schema:
-            type: string
-          in: query
-          name: id
-          description: '**City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter — just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have 3 city IDs, it’s treated as 3 API calls.*'
-        - $ref: '#/components/parameters/lon'
-        - schema:
-            type: string
-          in: query
-          name: lat
-          description: '**Latitude**. *Example: 35*. Latitude coordinate of the location of your interest. Must use with `lat`.'
-        - schema:
-            type: string
-            default: en
-            enum:
-              - ar
-              - bg
-              - ca
-              - cz
-              - de
-              - el
-              - en
-              - fa
-              - fi
-              - fr
-              - gl
-              - hr
-              - hu
-              - it
-              - ja
-              - kr
-              - la
-              - lt
-              - mk
-              - nl
-              - pl
-              - pt
-              - ro
-              - ru
-              - se
-              - sk
-              - sl
-              - es
-              - tr
-              - ua
-              - vi
-              - zh_cn
-              - zh_tw
-          in: query
-          name: lang
-          description: '**Language**. *Example: en*. You can use `lang` parameter to get the output in your language. We support the following languages that you can use with the corresponded lang values: Arabic - `ar`, Bulgarian - `bg`, Catalan - `ca`, Czech - `cz`, German - `de`, Greek - `el`, English - `en`, Persian (Farsi) - `fa`, Finnish - `fi`, French - `fr`, Galician - `gl`, Croatian - `hr`, Hungarian - `hu`, Italian - `it`, Japanese - `ja`, Korean - `kr`, Latvian - `la`, Lithuanian - `lt`, Macedonian - `mk`, Dutch - `nl`, Polish - `pl`, Portuguese - `pt`, Romanian - `ro`, Russian - `ru`, Swedish - `se`, Slovak - `sk`, Slovenian - `sl`, Spanish - `es`, Turkish - `tr`, Ukrainian - `ua`, Vietnamese - `vi`, Chinese Simplified - `zh_cn`, Chinese Traditional - `zh_tw`.'
-        - schema:
-            type: string
-            enum:
-              - json
-              - xml
-              - html
-            default: json
-          in: query
-          name: mode
-          description: '**Mode**. Example: html. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default.'
+                    format: int32
+                    examples:
+                    - 200
+        "404":
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Weather not found
+                type: string
+                examples:
+                - Not found
+security:
+- app_id: []
+tags:
+- name: Current Weather Data
+  description: Get current weather details
+externalDocs:
+  description: API Documentation
+  url: https://openweathermap.org/api
 components:
-  schemas:
-    User:
-      title: User
-      type: object
-      description: ''
-      examples:
-        - id: 142
-          firstName: Alice
-          lastName: Smith
-          email: alice.smith@gmail.com
-          dateOfBirth: '1997-10-31'
-          emailVerified: true
-          signUpDate: '2019-08-24'
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the given user.
-          x-stoplight:
-            id: 0iv7sdncjjzuo
-        firstName:
-          type: string
-          x-stoplight:
-            id: 4p9k3ozek7nc3
-        lastName:
-          type: string
-          x-stoplight:
-            id: fvr50qh2l0waz
-        email:
-          type: string
-          format: email
-          x-stoplight:
-            id: h9l703uy476tf
-        dateOfBirth:
-          type: string
-          format: date
-          example: '1997-10-31'
-          x-stoplight:
-            id: 3es9ucbk1zbqv
-        emailVerified:
-          type: boolean
-          description: Set to true if the user's email has been verified.
-          x-stoplight:
-            id: ueeq5nh01akuj
-        createDate:
-          type: string
-          format: date
-          description: The date that the user was created.
-          x-stoplight:
-            id: gvy9cbblblcg6
-      required:
-        - id
-        - firstName
-        - lastName
-        - email
-        - emailVerified
-      x-stoplight:
-        id: g4ncp400kq5uc
-  securitySchemes:
-    app_id:
-      name: appid
-      type: apiKey
-      in: query
   parameters:
+    q:
+      name: q
+      in: query
+      description: "**City name**. *Example: London*. You can call by city name, or by city name and country code. The API responds with a list of results that match a searching word. For the query value, type the city name and optionally the country code divided by a comma; use ISO 3166 country codes."
+      schema:
+        type: string
+    id:
+      name: id
+      in: query
+      description: "**City ID**. *Example: `2172797`*. You can call by city ID. The API responds with the exact result. The List of city IDs can be downloaded [here](http://bulk.openweathermap.org/sample/). You can include multiple cities in this parameter &mdash; just separate them by commas. The limit of locations is 20. *Note: A single ID counts as a one API call. So, if you have 3 city IDs, it’s treated as 3 API calls.*"
+      schema:
+        type: string
+    lat:
+      name: lat
+      in: query
+      description: "**Latitude**. *Example: 35*. The latitude coordinate of the location of your interest. Must use with `lon`."
+      schema:
+        type: string
     lon:
       name: lon
       in: query
-      required: false
+      description: "**Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`."
       schema:
         type: string
-      description: '**Longitude**. *Example: 139*. Longitude coordinate of the location of your interest. Must use with `lat`.'
-security:
-  - app_id: []
+    zip:
+      name: zip
+      in: query
+      description: "**Zip code**. Search by zip code. *Example: 95050,us*. Please note that if the country is not specified, the search uses USA as a default."
+      schema:
+        type: string
+    units:
+      name: units
+      in: query
+      description: "**Units**. *Example: imperial*. Possible values: `standard`, `metric`, and `imperial`. When you do not use the `units` parameter, the format is `standard` by default."
+      schema:
+        type: string
+        enum:
+        - standard
+        - metric
+        - imperial
+        default: imperial
+    lang:
+      name: lang
+      in: query
+      description: "**Language**. *Example: en*. You can use lang parameter to get the output in your language. We support the following languages that you can use with the corresponded lang values: Arabic - `ar`, Bulgarian - `bg`, Catalan - `ca`, Czech - `cz`, German - `de`, Greek - `el`, English - `en`, Persian (Farsi) - `fa`, Finnish - `fi`, French - `fr`, Galician - `gl`, Croatian - `hr`, Hungarian - `hu`, Italian - `it`, Japanese - `ja`, Korean - `kr`, Latvian - `la`, Lithuanian - `lt`, Macedonian - `mk`, Dutch - `nl`, Polish - `pl`, Portuguese - `pt`, Romanian - `ro`, Russian - `ru`, Swedish - `se`, Slovak - `sk`, Slovenian - `sl`, Spanish - `es`, Turkish - `tr`, Ukrainian - `ua`, Vietnamese - `vi`, Chinese Simplified - `zh_cn`, Chinese Traditional - `zh_tw`."
+      schema:
+        type: string
+        enum:
+        - ar
+        - bg
+        - ca
+        - cz
+        - de
+        - el
+        - en
+        - fa
+        - fi
+        - fr
+        - gl
+        - hr
+        - hu
+        - it
+        - ja
+        - kr
+        - la
+        - lt
+        - mk
+        - nl
+        - pl
+        - pt
+        - ro
+        - ru
+        - se
+        - sk
+        - sl
+        - es
+        - tr
+        - ua
+        - vi
+        - zh_cn
+        - zh_tw
+        default: en
+    mode:
+      name: mode
+      in: query
+      description: "**Mode**. *Example: html*. Determines the format of the response. Possible values are `json`, `xml`, and `html`. If the mode parameter is empty, the format is `json` by default."
+      schema:
+        type: string
+        enum:
+        - json
+        - xml
+        - html
+        default: json
+  schemas:
+    "200":
+      title: Successful response
+      type: object
+      properties:
+        coord:
+          title: Coord
+          type: object
+          properties:
+            lon:
+              type: number
+              description: "City geo location, longitude"
+              examples:
+              - 145.77
+            lat:
+              type: number
+              description: "City geo location, latitude"
+              examples:
+              - -16.92
+        weather:
+          type: array
+          items:
+            title: Weather
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Weather condition id
+                format: int32
+                examples:
+                - 803
+              main:
+                type: string
+                description: "Group of weather parameters (Rain, Snow, Extreme etc.)"
+                examples:
+                - Clouds
+              description:
+                type: string
+                description: Weather condition within the group
+                examples:
+                - broken clouds
+              icon:
+                type: string
+                description: Weather icon id
+                examples:
+                - 04n
+          description: (more info Weather condition codes)
+        base:
+          type: string
+          description: Internal parameter
+          examples:
+          - cmc stations
+        main:
+          title: Main
+          type: object
+          properties:
+            temp:
+              type: number
+              description: "Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+              examples:
+              - 293.25
+            pressure:
+              type: integer
+              description: "Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa"
+              format: int32
+              examples:
+              - 1019
+            humidity:
+              type: integer
+              description: "Humidity, %"
+              format: int32
+              examples:
+              - 83
+            temp_min:
+              type: number
+              description: "Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+              examples:
+              - 289.82
+            temp_max:
+              type: number
+              description: "Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+              examples:
+              - 295.37
+            sea_level:
+              type: number
+              description: "Atmospheric pressure on the sea level, hPa"
+              examples:
+              - 984
+            grnd_level:
+              type: number
+              description: "Atmospheric pressure on the ground level, hPa"
+              examples:
+              - 990
+        visibility:
+          type: integer
+          description: "Visibility, meter"
+          examples:
+          - 16093
+        wind:
+          title: Wind
+          type: object
+          properties:
+            speed:
+              type: number
+              description: "Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour."
+              examples:
+              - 5.1
+            deg:
+              type: integer
+              description: "Wind direction, degrees (meteorological)"
+              format: int32
+              examples:
+              - 150
+        clouds:
+          title: Clouds
+          type: object
+          properties:
+            all:
+              type: integer
+              description: "Cloudiness, %"
+              format: int32
+              examples:
+              - 75
+        rain:
+          title: Rain
+          type: object
+          properties:
+            "3h":
+              type: integer
+              description: Rain volume for the last 3 hours
+              format: int32
+              examples:
+              - 3
+        snow:
+          title: Snow
+          type: object
+          properties:
+            "3h":
+              type: number
+              description: Snow volume for the last 3 hours
+              examples:
+              - 6
+        dt:
+          type: integer
+          description: "Time of data calculation, unix, UTC"
+          format: int32
+          examples:
+          - 1435658272
+        sys:
+          title: Sys
+          type: object
+          properties:
+            type:
+              type: integer
+              description: Internal parameter
+              format: int32
+              examples:
+              - 1
+            id:
+              type: integer
+              description: Internal parameter
+              format: int32
+              examples:
+              - 8166
+            message:
+              type: number
+              description: Internal parameter
+              examples:
+              - 0.0166
+            country:
+              type: string
+              description: "Country code (GB, JP etc.)"
+              examples:
+              - AU
+            sunrise:
+              type: integer
+              description: "Sunrise time, unix, UTC"
+              format: int32
+              examples:
+              - 1435610796
+            sunset:
+              type: integer
+              description: "Sunset time, unix, UTC"
+              format: int32
+              examples:
+              - 1435650870
+        id:
+          type: integer
+          description: City ID
+          format: int32
+          examples:
+          - 2172797
+        name:
+          type: string
+          examples:
+          - Cairns
+        cod:
+          type: integer
+          description: Internal parameter
+          format: int32
+          examples:
+          - 200
+    Coord:
+      title: Coord
+      type: object
+      properties:
+        lon:
+          type: number
+          description: "City geo location, longitude"
+          examples:
+          - 145.77
+        lat:
+          type: number
+          description: "City geo location, latitude"
+          examples:
+          - -16.92
+    Weather:
+      title: Weather
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Weather condition id
+          format: int32
+          examples:
+          - 803
+        main:
+          type: string
+          description: "Group of weather parameters (Rain, Snow, Extreme etc.)"
+          examples:
+          - Clouds
+        description:
+          type: string
+          description: Weather condition within the group
+          examples:
+          - broken clouds
+        icon:
+          type: string
+          description: Weather icon id
+          examples:
+          - 04n
+    Main:
+      title: Main
+      type: object
+      properties:
+        temp:
+          type: number
+          description: "Temperature. Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+          examples:
+          - 293.25
+        pressure:
+          type: integer
+          description: "Atmospheric pressure (on the sea level, if there is no sea_level or grnd_level data), hPa"
+          format: int32
+          examples:
+          - 1019
+        humidity:
+          type: integer
+          description: "Humidity, %"
+          format: int32
+          examples:
+          - 83
+        temp_min:
+          type: number
+          description: "Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+          examples:
+          - 289.82
+        temp_max:
+          type: number
+          description: "Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally). Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit."
+          examples:
+          - 295.37
+        sea_level:
+          type: number
+          description: "Atmospheric pressure on the sea level, hPa"
+          examples:
+          - 984
+        grnd_level:
+          type: number
+          description: "Atmospheric pressure on the ground level, hPa"
+          examples:
+          - 990
+    Wind:
+      title: Wind
+      type: object
+      properties:
+        speed:
+          type: number
+          description: "Wind speed. Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour."
+          examples:
+          - 5.1
+        deg:
+          type: integer
+          description: "Wind direction, degrees (meteorological)"
+          format: int32
+          examples:
+          - 150
+    Clouds:
+      title: Clouds
+      type: object
+      properties:
+        all:
+          type: integer
+          description: "Cloudiness, %"
+          format: int32
+          examples:
+          - 75
+    Rain:
+      title: Rain
+      type: object
+      properties:
+        "3h":
+          type: integer
+          description: Rain volume for the last 3 hours
+          format: int32
+          examples:
+          - 3
+    Snow:
+      title: Snow
+      type: object
+      properties:
+        "3h":
+          type: number
+          description: Snow volume for the last 3 hours
+          examples:
+          - 6
+    Sys:
+      title: Sys
+      type: object
+      properties:
+        type:
+          type: integer
+          description: Internal parameter
+          format: int32
+          examples:
+          - 1
+        id:
+          type: integer
+          description: Internal parameter
+          format: int32
+          examples:
+          - 8166
+        message:
+          type: number
+          description: Internal parameter
+          examples:
+          - 0.0166
+        country:
+          type: string
+          description: "Country code (GB, JP etc.)"
+          examples:
+          - AU
+        sunrise:
+          type: integer
+          description: "Sunrise time, unix, UTC"
+          format: int32
+          examples:
+          - 1435610796
+        sunset:
+          type: integer
+          description: "Sunset time, unix, UTC"
+          format: int32
+          examples:
+          - 1435650870
+  securitySchemes:
+    app_id:
+      type: apiKey
+      description: "API key to authorize requests. (If you don't have an API key, get one at https://openweathermap.org/. See https://idratherbewriting.com/learnapidoc/docapis_get_auth_keys.html for details.)"
+      name: appid
+      in: query
